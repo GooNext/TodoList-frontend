@@ -1,8 +1,8 @@
-import { getTasks } from '../api/index';
+import { addNewTask, deleteTask, getTasks } from '../api/index';
 import { makeAutoObservable } from "mobx"
 
 class TasksStore {
-    tasks = []
+    tasks: Array<Object> = []
 
     constructor() {
         makeAutoObservable(this)
@@ -11,6 +11,18 @@ class TasksStore {
 
     getTasks = async () => {
         this.tasks = await getTasks()
+    }
+
+    addNewTask = async (sendObj: any) => {
+        addNewTask(sendObj)
+            .then(() => this.getTasks())
+            .catch((err: string) => alert(err))
+    }
+
+    deleteTask = async (id: string) => {
+        await deleteTask(id)
+            .then(() => this.getTasks())
+            .catch((err: string) => alert(err))
     }
 }
 

@@ -28,6 +28,35 @@
   color: #61dafb;
 }
 
+.ant-row {
+  min-height: 100vh;
+}
+
+.df {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.align-items-center {
+  align-items: center;
+  word-wrap: break-word;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.ant-menu-item-group-title {
+  width: 250px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
