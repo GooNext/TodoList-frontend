@@ -73,17 +73,7 @@ const RenderMenuItems = observer(({ showModal }: any) => {
         >
             {CategoriesStore.categories.map((item: SubMenuType, index: number) => {
                 return (
-                    <SubMenu key={`sub4-${index}`} icon={<SettingOutlined />} title={item.title}>
-                        <Menu.ItemGroup className="df align-items-center" key={`${item}${index}`} title={item.title}>
-                            <div>
-                                <Button onClick={() => setTaskState(!taskState)} size="small" type="primary">
-                                    <Tooltip placement="top" title={`Add task for ${item.title} category`}>
-                                        <PlusOutlined />
-                                    </Tooltip>
-                                </Button>
-                                <AddNewTask title={`Add task for ${item.title} category`} categoryId={item._id} setIsModalVisible={setTaskState} isModalVisible={taskState} />
-                            </div>
-                        </Menu.ItemGroup>
+                    <SubMenu key={`sub4-${item._id}`} icon={<SettingOutlined />} title={item.title}>
                         {TasksStore.tasks.map((value: any) => value.categoryId === item._id ? <Menu.Item key={value._id}><Link to={`/task/${value._id}`}>{value.title}</Link></Menu.Item> : null)}
                     </SubMenu>
                 )

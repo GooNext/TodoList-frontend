@@ -15,7 +15,9 @@ class CategoriesStore {
 
     addCategory = async (sendObj: any) => {
         addCategory(sendObj)
-            .then(() => this.getCategories())
+            .then(() => {
+                this.getCategories()
+            })
             .catch((err: string) => alert(err))
     }
 }
