@@ -1,15 +1,16 @@
 import { makeAutoObservable } from 'mobx';
-import { getTaskById, deleteTask } from '../api';
+import { getTaskById } from '../api';
+
 class TaskStore {
-    task: any = {}
+  task: any = {};
 
-    constructor() {
-        makeAutoObservable(this)
-    }
+  constructor() {
+    makeAutoObservable(this);
+  }
 
-    getTask = async (id: string) => {
-        this.task = await getTaskById(id)
-    }
+  getTask = async (id: string) => {
+    this.task = await getTaskById(id);
+  };
 }
 
-export default new TaskStore()
+export default new TaskStore();

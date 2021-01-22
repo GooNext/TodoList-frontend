@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import './index.scss';
 import App from './layout/App';
 import reportWebVitals from './reportWebVitals';
-import 'antd/dist/antd.css'
-import { BrowserRouter } from 'react-router-dom';
+import 'antd/dist/antd.css';
 
 ReactDOM.render(
   <React.StrictMode>

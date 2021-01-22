@@ -1,17 +1,13 @@
-import { Button, PageHeader, Popconfirm } from "antd"
-import TaskStore from "../../stores/TaskStore"
-import TaskPageHeader from "./TaskPageHeader"
-
+import TaskStore from '../../stores/TaskStore';
+import TaskPageHeader from './TaskPageHeader';
 
 const Task = ({ match }: any) => {
-    const id = match.params.id
-    TaskStore.getTask(id)
-    const taskInfo = TaskStore.task
-    const { title, time, icon } = taskInfo
+  const { id } = match.params;
+  TaskStore.getTask(id);
+  const taskInfo = TaskStore.task;
+  const { title, time, icon } = taskInfo;
 
-    return (
-        <TaskPageHeader title={title} time={time} icon={icon} id={id} />
-    )
-}
+  return <TaskPageHeader title={title} time={time} icon={icon} id={id} />;
+};
 
-export default Task
+export default Task;

@@ -1,11 +1,11 @@
 import './App.scss';
-import { Col, Row, Spin } from 'antd';
-import MenuItems from '../components/Menu/MenuItems';
-import routes from '../routes/routes';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Suspense, useState } from 'react';
-import Layout, { Content, Footer, Header } from 'antd/lib/layout/layout';
+import { Spin } from 'antd';
+import { Route, Switch } from 'react-router-dom';
+import { Suspense } from 'react';
+import Layout, { Content, Footer } from 'antd/lib/layout/layout';
 import Sider from 'antd/lib/layout/Sider';
+import routes from '../routes/routes';
+import MenuItems from '../components/Menu/MenuItems';
 import MainHeader from './Header/Header';
 
 const App = () => {
@@ -22,7 +22,15 @@ const App = () => {
             <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
               <Switch>
                 {routes.map((route) => {
-                  return <Route component={route.component} key={route.path} path={route.path} exact={route.exact} name={route.name} />
+                  return (
+                    <Route
+                      component={route.component}
+                      key={route.path}
+                      path={route.path}
+                      exact={route.exact}
+                      name={route.name}
+                    />
+                  );
                 })}
               </Switch>
             </div>
@@ -31,7 +39,7 @@ const App = () => {
         </Layout>
       </Layout>
     </Suspense>
-  )
-}
+  );
+};
 
 export default App;
