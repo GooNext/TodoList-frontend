@@ -30,6 +30,12 @@
   color: white;
 }
 
+.category {
+  &__header {
+      padding-left: 0!important;
+  }
+}
+
 .App-link {
   color: #61dafb;
 }

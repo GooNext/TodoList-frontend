@@ -16,6 +16,14 @@ export const addCategory = async (sendObj: Record<string, unknown>): Promise<unk
   return response.json();
 };
 
+export const deleteCategory = async (id: string): Promise<unknown | string> => {
+  const url = `https://dry-cliffs-80424.herokuapp.com/categories/${id}`;
+  const response = await fetch(url, {
+    method: 'DELETE',
+  });
+  return response.json();
+};
+
 export const addNewTask = async (sendObj: Record<string, unknown>): Promise<unknown | string> => {
   const url = `https://dry-cliffs-80424.herokuapp.com/tasks/add`;
   const response = await fetch(url, {

@@ -1,4 +1,4 @@
-import { Button, Menu, message, Tooltip } from 'antd';
+import { Button, Menu, message, Spin, Tooltip } from 'antd';
 import './Menu.scss';
 import React, { useState, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
@@ -90,19 +90,25 @@ const RenderMenuItems = observer(({ showModal }: any) => {
       mode="inline"
       inlineCollapsed={state.collapsed}
     >
-      {CategoriesStore.categories.map((item: SubMenuType) => {
-        return (
-          <SubMenu key={`sub4-${item._id}`} icon={<SettingOutlined />} title={item.title}>
-            {TasksStore.tasks.map((value: any) =>
-              value.categoryId === item._id ? (
-                <Menu.Item key={value._id}>
-                  <Link to={`/task/${value._id}`}>{value.title}</Link>
-                </Menu.Item>
-              ) : null
-            )}
-          </SubMenu>
-        );
-      })}
+      {CategoriesStore.categories.length ? (
+        CategoriesStore.categories.map((item: SubMenuType) => {
+          return (
+            <SubMenu key={`sub4-${item._id}`} icon={<SettingOutlined />} title={item.title}>
+              {TasksStore.tasks.map((value: any) =>
+                value.categoryId === item._id ? (
+                  <Menu.Item key={value._id}>
+                    <Link to={`/task/${value._id}`}>{value.title}</Link>
+                  </Menu.Item>
+                ) : null
+              )}
+            </SubMenu>
+          );
+        })
+      ) : (
+        <div style={{ margin: '20px 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Spin />
+        </div>
+      )}
       <div style={{ margin: '20px 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Tooltip placement="top" title="Add new category">
           <Button onClick={showModal}>

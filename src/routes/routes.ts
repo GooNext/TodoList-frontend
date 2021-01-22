@@ -3,6 +3,11 @@ import Task from '../components/Task/Task';
 
 // All categories
 import AllCategories from '../pages/AllCategories/AllCategories';
+import Category from '../pages/Category/Category';
+
+const routes: Array<RouteObj> = [];
+
+routes.push({ path: '/categories', exact: true, name: 'Categories', component: AllCategories });
 
 type RouteObj = {
   path: string;
@@ -11,9 +16,8 @@ type RouteObj = {
   component: any;
 };
 
-const routes: Array<RouteObj> = [];
-
 routes.push({ path: '/task/:id', exact: true, name: 'Task', component: Task });
 routes.push({ path: '/categories', exact: true, name: 'Categories', component: AllCategories });
+routes.push({ path: '/categories/:id', exact: true, name: 'Category', component: Category });
 
 export default routes;
