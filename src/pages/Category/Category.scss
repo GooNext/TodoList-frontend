@@ -1,0 +1,10 @@
+.category {
+    &__body {
+        display: flex;
+        &--item {
+            max-width: 250px;
+            margin: 0 8px;
+            width: 100%;
+        }
+    }
+}

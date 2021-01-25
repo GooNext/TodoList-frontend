@@ -55,3 +55,21 @@ export const deleteTask = async (id: string): Promise<unknown | string> => {
   });
   return response.json();
 };
+
+export const getBoards = async (): Promise<unknown | any> => {
+  const url = `https://dry-cliffs-80424.herokuapp.com/boards/`;
+  const response = await fetch(url);
+  return response.json();
+};
+
+export const addBoard = async (sendObj: Record<string, unknown>): Promise<unknown | string> => {
+  const url = `https://dry-cliffs-80424.herokuapp.com/boards/add`;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify(sendObj),
+  });
+  return response.json();
+};
