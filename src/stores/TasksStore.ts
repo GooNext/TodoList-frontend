@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { addNewTask, deleteTask, getTasks } from '../api/index';
+import { addNewTask, deleteTask, getTasks, updateTaskByBoardId } from '../api/index';
 
 class TasksStore {
   tasks: Array<{ title: string }> = [];
@@ -21,6 +21,12 @@ class TasksStore {
 
   deleteTask = async (id: string) => {
     await deleteTask(id)
+      .then(() => this.getTasks())
+      .catch((err: string) => new Error(err));
+  };
+
+  updateTaskByBoardId = async (taskId: string, boardId: string) => {
+    await updateTaskByBoardId(taskId, boardId)
       .then(() => this.getTasks())
       .catch((err: string) => new Error(err));
   };

@@ -76,7 +76,7 @@ const AddNewTask = ({ setIsModalVisible, isModalVisible, categoryId, boardId }: 
   );
 };
 
-const RenderBoards = observer(({ item, index, match }: any) => {
+const RenderBoards = observer(({ item, match, droppableId }: any) => {
   const [newTask, setNewTask] = useState(false);
   const [boardId, setBoardId] = useState('');
 
@@ -88,6 +88,38 @@ const RenderBoards = observer(({ item, index, match }: any) => {
   const handle = {
     addNewTask: (e: boolean) => setNewTask(e),
   };
+
+  const TaskItem = observer(() => {
+    return (
+      <Droppable droppableId={droppableId}>
+        {(provided: any) => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            {TasksStore.tasks.map((task: any, i) => (
+              <>
+                {task.boardId === item._id ? (
+                  <Draggable key={task._id} draggableId={task._id} index={i}>
+                    {(secondProvided) => (
+                      <div
+                        className="m4"
+                        ref={secondProvided.innerRef}
+                        {...secondProvided.draggableProps}
+                        {...secondProvided.dragHandleProps}
+                      >
+                        <Card headStyle={{ background: '#CDF1FF' }} type="inner" title={task.title}>
+                          taskinfi taskinfi taskinfi taskinfi taskinfi
+                        </Card>
+                      </div>
+                    )}
+                  </Draggable>
+                ) : null}
+              </>
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    );
+  });
 
   return (
     <div key={item._id} className="category__body--item">
@@ -107,33 +139,7 @@ const RenderBoards = observer(({ item, index, match }: any) => {
           isModalVisible={newTask}
           setIsModalVisible={handle.addNewTask}
         />
-        <Droppable droppableId={`droppable${index}`}>
-          {(provided: any) => (
-            <div ref={provided.innerRef}>
-              {TasksStore.tasks.map((task: any, i) => (
-                <>
-                  {task.boardId === item._id ? (
-                    <Draggable key={task._id} draggableId={task._id} index={i}>
-                      {(provided2) => (
-                        <div
-                          className="m4"
-                          ref={provided2.innerRef}
-                          {...provided2.draggableProps}
-                          {...provided2.dragHandleProps}
-                        >
-                          <Card headStyle={{ background: '#CDF1FF' }} type="inner" title={task.title}>
-                            taskinfi taskinfi taskinfi taskinfi taskinfi
-                          </Card>
-                        </div>
-                      )}
-                    </Draggable>
-                  ) : null}
-                </>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
+        <TaskItem />
       </Card>
     </div>
   );
@@ -155,15 +161,23 @@ const Category = ({ match }: any) => {
     BoardsStore.getBoards();
   }, []);
 
-  const onDragEnd = () => {
-    console.log('ended');
+  const onDragEnd = (e: any) => {
+    const taskId = e.draggableId;
+    const boardId = e.destination.droppableId;
+    TasksStore.updateTaskByBoardId(taskId, boardId);
   };
 
   const BoardItem = observer(() => {
     return (
       <DragDropContext onDragEnd={onDragEnd}>
         {BoardsStore.boards.map((item: any, index) => {
-          return <RenderBoards match={match} item={item} index={index} />;
+          return (
+            <>
+              {item.categoryId === categoryInfo.id ? (
+                <RenderBoards match={match} item={item} index={index} droppableId={item._id} />
+              ) : null}
+            </>
+          );
         })}
       </DragDropContext>
     );

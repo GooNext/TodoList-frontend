@@ -48,6 +48,18 @@ export const getTaskById = async (id: string): Promise<unknown | string> => {
   return response.json();
 };
 
+export const updateTaskByBoardId = async (taskId: string, boardId: string): Promise<unknown | string> => {
+  const url = `https://dry-cliffs-80424.herokuapp.com/tasks/update/boardId/${taskId}`;
+  const response = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify({ boardId }),
+  });
+  return response.json();
+};
+
 export const deleteTask = async (id: string): Promise<unknown | string> => {
   const url = `https://dry-cliffs-80424.herokuapp.com/tasks/${id}`;
   const response = await fetch(url, {
