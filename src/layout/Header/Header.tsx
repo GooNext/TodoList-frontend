@@ -7,7 +7,7 @@ const MainHeader = () => {
     <Header className="site-layout-background" style={{ padding: 0 }}>
       <Menu theme="dark" mode="horizontal">
         <Menu.Item key="1">
-          <Link to="/categories">All categories</Link>
+          <Link to="/">All categories</Link>
         </Menu.Item>
         <Menu.Item key="2">
           <Link to="/tasks">All tasks</Link>

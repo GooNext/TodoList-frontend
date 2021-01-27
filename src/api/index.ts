@@ -60,6 +60,30 @@ export const updateTaskByBoardId = async (taskId: string, boardId: string): Prom
   return response.json();
 };
 
+export const updateTask = async (sendObj, taskId): Promise<unknown | string> => {
+  const url = `https://dry-cliffs-80424.herokuapp.com/tasks/update/${taskId}`;
+  const response = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify(sendObj),
+  });
+  return response.json();
+};
+
+export const updateStatus = async (taskId, status): Promise<unknown | string> => {
+  const url = `https://dry-cliffs-80424.herokuapp.com/tasks/update-status/${taskId}`;
+  const response = await fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify(status),
+  });
+  return response.json();
+};
+
 export const deleteTask = async (id: string): Promise<unknown | string> => {
   const url = `https://dry-cliffs-80424.herokuapp.com/tasks/${id}`;
   const response = await fetch(url, {
@@ -82,6 +106,14 @@ export const addBoard = async (sendObj: Record<string, unknown>): Promise<unknow
       'Content-Type': 'application/json;charset=utf-8',
     },
     body: JSON.stringify(sendObj),
+  });
+  return response.json();
+};
+
+export const deleteBoard = async (id: string): Promise<unknown | string> => {
+  const url = `https://dry-cliffs-80424.herokuapp.com/boards/${id}`;
+  const response = await fetch(url, {
+    method: 'DELETE',
   });
   return response.json();
 };

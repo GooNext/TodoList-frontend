@@ -7,77 +7,12 @@ import SubMenu from 'antd/lib/menu/SubMenu';
 import { Link } from 'react-router-dom';
 import TasksStore from '../../stores/TasksStore';
 import CategoriesStore from '../../stores/CategoriesStore';
-
-import ModalWindow from '../ModalWindow/ModalWindow';
+import { AddNewCategory } from '../Modals/Modals';
 
 interface SubMenuType {
   title: string;
   _id: string;
 }
-
-const AddNewCategory = ({ setIsModalVisible, isModalVisible }: any) => {
-  const [sendObj, setSendObj] = useState({
-    title: '',
-    time: new Date(),
-    icon: '1242154',
-  });
-
-  const handleOk = useCallback(() => {
-    setIsModalVisible(false);
-    CategoriesStore.addCategory(sendObj);
-    message.info('Category has been successfully added');
-  }, [sendObj, setIsModalVisible]);
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleInputChange = useCallback((e) => setSendObj({ ...sendObj, title: e.target.value }), [sendObj]);
-
-  return (
-    <ModalWindow
-      title="Add new category"
-      onChange={handleInputChange}
-      visible={isModalVisible}
-      onOk={handleOk}
-      onCancel={handleCancel}
-    />
-  );
-};
-
-// const AddNewTask = ({ setIsModalVisible, isModalVisible, title, categoryId }: any) => {
-//   const [sendObj, setSendObj] = useState({
-//     title: '',
-//     time: new Date(),
-//     icon: '1242154',
-//     categoryId: '',
-//   });
-
-//   const handleOk = useCallback(() => {
-//     setIsModalVisible(false);
-//     TasksStore.addNewTask(sendObj);
-//     message.info('Task has been successfully added');
-//   }, [sendObj, setIsModalVisible]);
-
-//   const handleCancel = () => {
-//     setIsModalVisible(false);
-//   };
-
-//   const handleInputChange = useCallback((e) => setSendObj({ ...sendObj, title: e.target.value, categoryId }), [
-//     sendObj,
-//     categoryId,
-//   ]);
-
-//   return (
-//     <ModalWindow
-//       title={title}
-//       onChange={handleInputChange}
-//       visible={isModalVisible}
-//       onOk={handleOk}
-//       onCancel={handleCancel}
-//     />
-//   );
-// };
 
 const RenderMenuItems = observer(({ showModal }: any) => {
   const [state] = useState({ collapsed: false });

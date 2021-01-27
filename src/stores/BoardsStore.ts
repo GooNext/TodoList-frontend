@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { addBoard, getBoards } from '../api/index';
+import { addBoard, deleteBoard, getBoards } from '../api/index';
 
 class BoardsStore {
   boards: Array<{ title: string }> = [];
@@ -17,6 +17,12 @@ class BoardsStore {
       .then(() => {
         this.getBoards();
       })
+      .catch((err: string) => new Error(err));
+  };
+
+  deleteBoard = async (id: string) => {
+    await deleteBoard(id)
+      .then(() => this.getBoards())
       .catch((err: string) => new Error(err));
   };
 }

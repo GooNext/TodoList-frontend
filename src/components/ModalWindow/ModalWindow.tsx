@@ -1,5 +1,7 @@
-import { Input } from 'antd';
+import { Input, Select } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
+
+const { Option } = Select;
 
 interface ModalTypes {
   onChange: any;
@@ -7,12 +9,34 @@ interface ModalTypes {
   onOk: () => any;
   onCancel: () => any;
   title: string;
+  options: Array<any>;
 }
 
-const ModalWindow = ({ title, onChange, visible, onOk, onCancel }: ModalTypes) => {
+const ModalWindow = ({
+  title,
+  onChange: { inputChange, selectChange },
+  visible,
+  onOk,
+  onCancel,
+  options,
+}: ModalTypes) => {
   return (
     <Modal title={title} visible={visible} onOk={onOk} onCancel={onCancel}>
-      <Input onChange={onChange} placeholder="Enter title" />
+      <Input onChange={(e) => inputChange(e)} placeholder="Enter title" />
+      {options.length ? (
+        <Select
+          showSearch
+          style={{ width: '100%', marginTop: '15px' }}
+          placeholder="Select a board"
+          optionFilterProp="children"
+          onChange={selectChange}
+          filterOption={(input: any, option: any) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+        >
+          {options.map((item) => {
+            return <Option value={item._id}>{item.title}</Option>;
+          })}
+        </Select>
+      ) : null}
     </Modal>
   );
 };
