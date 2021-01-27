@@ -1,6 +1,6 @@
-import { Button, Menu, message, Spin, Tooltip } from 'antd';
+import { Button, Menu, Spin, Tooltip } from 'antd';
 import './Menu.scss';
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { SettingOutlined, PlusOutlined } from '@ant-design/icons';
 import SubMenu from 'antd/lib/menu/SubMenu';
