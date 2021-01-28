@@ -1,5 +1,6 @@
 import { Input, Select } from 'antd';
 import Modal from 'antd/lib/modal/Modal';
+import { useTranslation } from 'react-i18next';
 
 const { Option } = Select;
 
@@ -22,7 +23,7 @@ const ModalWindow = ({
 }: ModalTypes) => {
   return (
     <Modal title={title} visible={visible} onOk={onOk} onCancel={onCancel}>
-      <Input onChange={(e) => inputChange(e)} placeholder="Enter title" />
+      <Input onChange={(e) => inputChange(e)} placeholder={useTranslation().t('Enter title')} />
       {options.length ? (
         <Select
           showSearch

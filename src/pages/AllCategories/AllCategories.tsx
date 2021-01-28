@@ -70,7 +70,7 @@ const AllCategories = () => {
       <PageHeader
         className="category__header"
         title={t('All available categories')}
-        subTitle="Choose your own category"
+        subTitle={t('Choose your own category')}
       />
       <div className="allCategories">
         <Space className="allCategories" wrap size={20}>

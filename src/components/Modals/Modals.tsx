@@ -33,8 +33,8 @@ export const AddNewBoard = ({ setIsModalVisible, isModalVisible, categoryId }: a
   const handleInputChange = useCallback((e) => setSendObj({ ...sendObj, title: e.target.value }), [sendObj]);
 
   return (
-    <Modal title="Add new board" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-      <Input onChange={handleInputChange} placeholder="Enter title" />
+    <Modal title={t('Add new board')} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Input onChange={handleInputChange} placeholder={t('Enter title')} />
     </Modal>
   );
 };
@@ -71,12 +71,12 @@ export const AddNewTask = ({ setIsModalVisible, isModalVisible, categoryId }: an
 
   return (
     <div>
-      <Modal title="Add new task" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <Input onChange={(e) => handle.inputChange(e)} placeholder="Enter title" />
+      <Modal title={t('Add new task')} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <Input onChange={(e) => handle.inputChange(e)} placeholder={t('Enter title')} />
         <Select
           showSearch
           style={{ width: '100%', margin: '15px 0' }}
-          placeholder="Select a board"
+          placeholder={t('Select a board')}
           optionFilterProp="children"
           onChange={handle.selectChange}
           filterOption={(input: any, option: any) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
@@ -117,7 +117,7 @@ export const AddNewCategory = ({ setIsModalVisible, isModalVisible }: any) => {
 
   return (
     <ModalWindow
-      title="Add new category"
+      title={t('Add new category')}
       onChange={handle}
       visible={isModalVisible}
       onOk={handleOk}
