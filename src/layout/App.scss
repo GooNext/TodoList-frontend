@@ -40,6 +40,41 @@
   color: #61dafb;
 }
 
+.header {
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 20px;
+    &--locales {
+      display: flex;
+      & div {
+        margin: 0 10px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.locale {
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  &__ru {
+    background: url('../img/ruflag.png');
+    background-size: cover;
+  }
+  &__zh {
+    background: url('../img/chinaflag.jpg');
+    background-size: cover;
+  }
+  &__en {
+    background: url('../img/enflag.jpeg');
+    background-size: cover;
+    background-position: center;
+  }
+}
+
 .ant-row {
   min-height: 100vh;
 }

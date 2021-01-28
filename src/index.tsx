@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { Spin } from 'antd';
 import './index.scss';
 import App from './layout/App';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.css';
 
+import './i18n';
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <Suspense fallback={<Spin />}>
+        <App />
+      </Suspense>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

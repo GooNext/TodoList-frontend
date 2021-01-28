@@ -2,6 +2,7 @@ import { Input, message, Select } from 'antd';
 import { Option } from 'antd/lib/mentions';
 import TextArea from 'antd/lib/input/TextArea';
 import Modal from 'antd/lib/modal/Modal';
+import { useTranslation } from 'react-i18next';
 import { useCallback, useState } from 'react';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import BoardsStore from '../../stores/BoardsStore';
@@ -9,6 +10,7 @@ import CategoriesStore from '../../stores/CategoriesStore';
 import TasksStore from '../../stores/TasksStore';
 
 export const AddNewBoard = ({ setIsModalVisible, isModalVisible, categoryId }: any) => {
+  const { t } = useTranslation();
   const [sendObj, setSendObj] = useState({
     title: '',
     time: new Date(),
@@ -19,10 +21,10 @@ export const AddNewBoard = ({ setIsModalVisible, isModalVisible, categoryId }: a
   const handleOk = useCallback(() => {
     if (sendObj.title) {
       BoardsStore.addBoard(sendObj);
-      message.info('Board has been successfully added');
+      message.info(t('Board has been successfully added'));
       setIsModalVisible(false);
-    } else message.error('Please enter a title');
-  }, [sendObj, setIsModalVisible]);
+    } else message.error(t('Please enter a title'));
+  }, [sendObj, setIsModalVisible, t]);
 
   const handleCancel = () => {
     setIsModalVisible(false);
@@ -38,6 +40,7 @@ export const AddNewBoard = ({ setIsModalVisible, isModalVisible, categoryId }: a
 };
 
 export const AddNewTask = ({ setIsModalVisible, isModalVisible, categoryId }: any) => {
+  const { t } = useTranslation();
   const [sendObj, setSendObj] = useState({
     title: '',
     time: new Date(),
@@ -51,10 +54,10 @@ export const AddNewTask = ({ setIsModalVisible, isModalVisible, categoryId }: an
   const handleOk = useCallback(() => {
     if (sendObj.title && sendObj.boardId) {
       TasksStore.addNewTask(sendObj);
-      message.info('Task has been successfully added');
+      message.info(t('Task has been successfully added'));
       setIsModalVisible(false);
-    } else message.error('Add title and board name');
-  }, [sendObj, setIsModalVisible]);
+    } else message.error(t('Add title and board name'));
+  }, [sendObj, setIsModalVisible, t]);
 
   const handleCancel = () => {
     setIsModalVisible(false);
@@ -82,13 +85,14 @@ export const AddNewTask = ({ setIsModalVisible, isModalVisible, categoryId }: an
             return <>{categoryId === item.categoryId ? <Option value={item._id}>{item.title}</Option> : null}</>;
           })}
         </Select>
-        <TextArea placeholder="Enter a description" rows={4} onChange={handle.textArea} />
+        <TextArea placeholder={t('Enter a description')} rows={4} onChange={handle.textArea} />
       </Modal>
     </div>
   );
 };
 
 export const AddNewCategory = ({ setIsModalVisible, isModalVisible }: any) => {
+  const { t } = useTranslation();
   const [sendObj, setSendObj] = useState({
     title: '',
     time: new Date(),
@@ -98,10 +102,10 @@ export const AddNewCategory = ({ setIsModalVisible, isModalVisible }: any) => {
   const handleOk = useCallback(() => {
     if (sendObj.title) {
       CategoriesStore.addCategory(sendObj);
-      message.info('Category has been successfully added');
+      message.info(t('Category has been successfully added'));
       setIsModalVisible(false);
-    } else message.error('Please enter a title');
-  }, [sendObj, setIsModalVisible]);
+    } else message.error(t('Please enter a title'));
+  }, [sendObj, setIsModalVisible, t]);
 
   const handleCancel = () => {
     setIsModalVisible(false);
@@ -124,6 +128,7 @@ export const AddNewCategory = ({ setIsModalVisible, isModalVisible }: any) => {
 };
 
 export const OnTaskEdit = ({ taskInfo, setIsModalVisible, isModalVisible }: any) => {
+  const { t } = useTranslation();
   const [sendObj, setSendObj] = useState({
     title: taskInfo.title,
     description: taskInfo.description,
@@ -131,9 +136,9 @@ export const OnTaskEdit = ({ taskInfo, setIsModalVisible, isModalVisible }: any)
 
   const handleOk = useCallback(() => {
     TasksStore.updateTask(sendObj, taskInfo.id);
-    message.info('Task has been successfully updated');
+    message.info(t('Task has been successfully updated'));
     setIsModalVisible(false);
-  }, [sendObj, setIsModalVisible, taskInfo.id]);
+  }, [sendObj, setIsModalVisible, taskInfo.id, t]);
 
   const handleCancel = () => {
     setIsModalVisible(false);
@@ -148,7 +153,7 @@ export const OnTaskEdit = ({ taskInfo, setIsModalVisible, isModalVisible }: any)
     <div>
       <Modal title="Update task info" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <Input style={{ marginBottom: '15px' }} onChange={(e) => handle.inputTitleChange(e)} placeholder="Edit title" />
-        <TextArea placeholder="Edit description" rows={4} onChange={(e) => handle.inputDescriptionChange(e)} />
+        <TextArea placeholder={t('Edit description')} rows={4} onChange={(e) => handle.inputDescriptionChange(e)} />
       </Modal>
     </div>
   );

@@ -5,6 +5,7 @@ import { EditOutlined, EllipsisOutlined, SettingOutlined, DeleteOutlined } from 
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Meta from 'antd/lib/card/Meta';
 import CategoriesStore from '../../stores/CategoriesStore';
 import './AllCategories.scss';
@@ -12,14 +13,15 @@ import './AllCategories.scss';
 interface ItemType {
   title: string;
   _id: string;
+  t: any;
 }
 
-const CategoryItem = ({ title, _id }: ItemType) => {
+const CategoryItem = ({ t, title, _id }: ItemType) => {
   const [state, setState] = useState(false);
 
   const deleteCategory = () => {
     CategoriesStore.deleteCategory(_id);
-    message.info(`Category with id - ${_id} has been successfully deleted`);
+    message.info(`${t('Category with id - ')}${_id} ${t('has been successfully deleted')}`);
     setState(false);
   };
 
@@ -34,11 +36,11 @@ const CategoryItem = ({ title, _id }: ItemType) => {
             <div className="allCategories__popover--item" onClick={() => deleteCategory()}>
               <Space size={8}>
                 <DeleteOutlined style={{ color: 'red' }} />
-                Delete category
+                {t('Delete category')}
               </Space>
             </div>
           }
-          title="Category submenu"
+          title={t('Category submenu')}
           trigger="click"
           visible={state}
           onVisibleChange={setState}
@@ -52,7 +54,7 @@ const CategoryItem = ({ title, _id }: ItemType) => {
           <Meta
             avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
             title={title}
-            description="This is the description"
+            description={t('This is the description')}
           />
         </Skeleton>
       </Link>
@@ -62,13 +64,18 @@ const CategoryItem = ({ title, _id }: ItemType) => {
 
 const AllCategories = () => {
   const { categories } = CategoriesStore;
+  const { t } = useTranslation();
   return (
     <>
-      <PageHeader className="category__header" title="All available categories" subTitle="Choose your own category" />
+      <PageHeader
+        className="category__header"
+        title={t('All available categories')}
+        subTitle="Choose your own category"
+      />
       <div className="allCategories">
         <Space className="allCategories" wrap size={20}>
           {categories.map((item: ItemType) => (
-            <CategoryItem _id={item._id} title={item.title} />
+            <CategoryItem t={t} _id={item._id} title={item.title} />
           ))}
         </Space>
       </div>

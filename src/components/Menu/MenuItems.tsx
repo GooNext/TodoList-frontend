@@ -2,10 +2,9 @@ import { Button, Menu, Spin, Tooltip } from 'antd';
 import './Menu.scss';
 import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { SettingOutlined, PlusOutlined } from '@ant-design/icons';
-import SubMenu from 'antd/lib/menu/SubMenu';
+import { PlusOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import TasksStore from '../../stores/TasksStore';
+import { useTranslation } from 'react-i18next';
 import CategoriesStore from '../../stores/CategoriesStore';
 import { AddNewCategory } from '../Modals/Modals';
 
@@ -16,6 +15,7 @@ interface SubMenuType {
 
 const RenderMenuItems = observer(({ showModal }: any) => {
   const [state] = useState({ collapsed: false });
+  const { t } = useTranslation();
   // const [taskState, setTaskState] = useState(false);
   return (
     <Menu
@@ -28,15 +28,9 @@ const RenderMenuItems = observer(({ showModal }: any) => {
       {CategoriesStore.categories.length ? (
         CategoriesStore.categories.map((item: SubMenuType) => {
           return (
-            <SubMenu key={`sub4-${item._id}`} icon={<SettingOutlined />} title={item.title}>
-              {TasksStore.tasks.map((value: any) =>
-                value.categoryId === item._id ? (
-                  <Menu.Item key={value._id}>
-                    <Link to={`/task/${value._id}`}>{value.title}</Link>
-                  </Menu.Item>
-                ) : null
-              )}
-            </SubMenu>
+            <Menu.Item key={item._id}>
+              <Link to={`/categories/${item._id}`}>{item.title}</Link>
+            </Menu.Item>
           );
         })
       ) : (
@@ -45,7 +39,7 @@ const RenderMenuItems = observer(({ showModal }: any) => {
         </div>
       )}
       <div style={{ margin: '20px 0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Tooltip placement="top" title="Add new category">
+        <Tooltip placement="top" title={t('Add new category')}>
           <Button onClick={showModal}>
             <PlusOutlined />
           </Button>
