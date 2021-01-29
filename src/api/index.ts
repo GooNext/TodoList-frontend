@@ -1,119 +1,81 @@
+import { getAccessToken, logout } from '../utils';
+
+const fetchApi = async ({ path, method, body }: any) => {
+  const headers = new Headers();
+  const token = getAccessToken();
+  if (token) {
+    headers.append('Authorization', `Bearer ${token}`);
+    headers.append('Content-Type', 'application/json;charset=utf-8');
+  }
+  const url = `https://dry-cliffs-80424.herokuapp.com/${path}`;
+  return fetch(url, {
+    headers,
+    method,
+    body: body ? JSON.stringify(body) : null,
+  }).then((res) => {
+    if (res.status === 401) {
+      logout();
+    }
+    return res.json();
+  });
+};
+
 export const getCategories = async (): Promise<unknown | string> => {
-  const url = 'https://dry-cliffs-80424.herokuapp.com/categories';
-  const response = await fetch(url);
-  return response.json();
+  return fetchApi({ path: 'categories', method: 'GET' });
 };
 
 export const addCategory = async (sendObj: Record<string, unknown>): Promise<unknown | string> => {
-  const url = 'https://dry-cliffs-80424.herokuapp.com/categories/add';
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-    },
-    body: JSON.stringify(sendObj),
-  });
-  return response.json();
+  return fetchApi({ path: 'categories/add', method: 'POST', body: sendObj });
 };
 
 export const deleteCategory = async (id: string): Promise<unknown | string> => {
-  const url = `https://dry-cliffs-80424.herokuapp.com/categories/${id}`;
-  const response = await fetch(url, {
-    method: 'DELETE',
-  });
-  return response.json();
+  return fetchApi({ path: `categories/${id}`, method: 'DELETE' });
 };
 
 export const addNewTask = async (sendObj: Record<string, unknown>): Promise<unknown | string> => {
-  const url = `https://dry-cliffs-80424.herokuapp.com/tasks/add`;
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-    },
-    body: JSON.stringify(sendObj),
-  });
-  return response.json();
+  return fetchApi({ path: 'tasks/add', method: 'POST', body: sendObj });
 };
 
 export const getTasks = async (): Promise<unknown | any> => {
-  const url = `https://dry-cliffs-80424.herokuapp.com/tasks/`;
-  const response = await fetch(url);
-  return response.json();
+  return fetchApi({ path: 'tasks', method: 'GET' });
 };
 
 export const getTaskById = async (id: string): Promise<unknown | string> => {
-  const url = `https://dry-cliffs-80424.herokuapp.com/tasks/${id}`;
-  const response = await fetch(url);
-  return response.json();
+  return fetchApi({ path: `tasks/${id}`, method: 'GET' });
 };
 
 export const updateTaskByBoardId = async (taskId: string, boardId: string): Promise<unknown | string> => {
-  const url = `https://dry-cliffs-80424.herokuapp.com/tasks/update/boardId/${taskId}`;
-  const response = await fetch(url, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-    },
-    body: JSON.stringify({ boardId }),
-  });
-  return response.json();
+  return fetchApi({ path: `tasks/update/boardId/${taskId}`, method: 'PUT', body: { boardId } });
 };
 
 export const updateTask = async (sendObj, taskId): Promise<unknown | string> => {
-  const url = `https://dry-cliffs-80424.herokuapp.com/tasks/update/${taskId}`;
-  const response = await fetch(url, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-    },
-    body: JSON.stringify(sendObj),
-  });
-  return response.json();
+  return fetchApi({ path: `tasks/update/${taskId}`, method: 'PUT', body: sendObj });
 };
 
 export const updateStatus = async (taskId, status): Promise<unknown | string> => {
-  const url = `https://dry-cliffs-80424.herokuapp.com/tasks/update-status/${taskId}`;
-  const response = await fetch(url, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-    },
-    body: JSON.stringify(status),
-  });
-  return response.json();
+  return fetchApi({ path: `tasks/update-status/${taskId}`, method: 'PUT', body: status });
 };
 
 export const deleteTask = async (id: string): Promise<unknown | string> => {
-  const url = `https://dry-cliffs-80424.herokuapp.com/tasks/${id}`;
-  const response = await fetch(url, {
-    method: 'DELETE',
-  });
-  return response.json();
+  return fetchApi({ path: `tasks/${id}`, method: 'DELETE' });
 };
 
 export const getBoards = async (): Promise<unknown | any> => {
-  const url = `https://dry-cliffs-80424.herokuapp.com/boards/`;
-  const response = await fetch(url);
-  return response.json();
+  return fetchApi({ path: 'boards', method: 'GET' });
 };
 
 export const addBoard = async (sendObj: Record<string, unknown>): Promise<unknown | string> => {
-  const url = `https://dry-cliffs-80424.herokuapp.com/boards/add`;
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8',
-    },
-    body: JSON.stringify(sendObj),
-  });
-  return response.json();
+  return fetchApi({ path: 'boards/add', method: 'POST', body: sendObj });
 };
 
 export const deleteBoard = async (id: string): Promise<unknown | string> => {
-  const url = `https://dry-cliffs-80424.herokuapp.com/boards/${id}`;
-  const response = await fetch(url, {
-    method: 'DELETE',
-  });
-  return response.json();
+  return fetchApi({ path: `boards/${id}`, method: 'DELETE' });
+};
+
+export const registerUser = async (sendObj: Record<string, unknown>): Promise<unknown | string> => {
+  return fetchApi({ path: 'user', method: 'POST', body: sendObj });
+};
+
+export const loginUser = async (sendObj: Record<string, unknown>): Promise<unknown | string> => {
+  return fetchApi({ path: 'login', method: 'POST', body: sendObj });
 };
