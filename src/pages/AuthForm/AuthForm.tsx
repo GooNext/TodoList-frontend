@@ -18,11 +18,9 @@ const AuthForm = () => {
         window.location.href = '/';
         localStorage.setItem('token', res.token);
       })
-      .catch((res) => console.log(res));
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+  const onFinishFailed = () => {
   };
 
   return (
