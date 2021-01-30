@@ -4,7 +4,7 @@ export const logout = () => {
   localStorage.removeItem('token');
   sessionStorage.removeItem('token');
   // eslint-disable-next-line no-restricted-globals
-  location.reload();
+  // location.reload();
 };
 
 export const getAccessToken = () => {

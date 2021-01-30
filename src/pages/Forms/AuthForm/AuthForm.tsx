@@ -1,7 +1,6 @@
 import { Button, Input, Form } from 'antd';
-import { withRouter } from 'react-router-dom';
-import { registerUser } from '../../api';
-import './RegisterForm.scss';
+import { Link, withRouter } from 'react-router-dom';
+import { loginUser } from '../../../api';
 
 const layout = {
   labelCol: { span: 8 },
@@ -12,20 +11,20 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-const RegisterForm = () => {
+const AuthForm = () => {
   const onFinish = (values: any) => {
-    registerUser(values);
-    window.location.href = '/auth';
+    loginUser(values).then((res: any) => {
+      window.location.href = '/';
+      localStorage.setItem('token', res.token);
+    });
   };
 
-  const onFinishFailed = () => {
-    // console.log('Failed:', errorInfo);
-  };
+  const onFinishFailed = () => {};
 
   return (
     <div className="auth">
       <div className="auth__container">
-        <h1>Registration</h1>
+        <h1>Sign in</h1>
         <Form
           {...layout}
           name="basic"
@@ -34,10 +33,6 @@ const RegisterForm = () => {
           onFinishFailed={onFinishFailed}
         >
           <Form.Item label="Login" name="login" rules={[{ required: true, message: 'Please input your login!' }]}>
-            <Input />
-          </Form.Item>
-
-          <Form.Item label="Name" name="name" rules={[{ required: true, message: 'Please input your name!' }]}>
             <Input />
           </Form.Item>
 
@@ -54,10 +49,13 @@ const RegisterForm = () => {
               Submit
             </Button>
           </Form.Item>
+          <p>
+            If you are not registered <Link to="/register">Click here</Link>
+          </p>
         </Form>
       </div>
     </div>
   );
 };
 
-export default withRouter(RegisterForm);
+export default withRouter(AuthForm);

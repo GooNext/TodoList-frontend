@@ -15,6 +15,7 @@ const fetchApi = async ({ path, method, body }: any) => {
   }).then((res) => {
     if (res.status === 401) {
       logout();
+      window.location.href = '/auth';
     }
     return res.json();
   });

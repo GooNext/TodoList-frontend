@@ -1,6 +1,7 @@
 import { Button, Input, Form } from 'antd';
 import { withRouter } from 'react-router-dom';
-import { loginUser } from '../../api';
+import { registerUser } from '../../../api';
+import '../RegisterForm.scss';
 
 const layout = {
   labelCol: { span: 8 },
@@ -11,22 +12,20 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-const AuthForm = () => {
+const RegisterForm = () => {
   const onFinish = (values: any) => {
-    loginUser(values)
-      .then((res: any) => {
-        window.location.href = '/';
-        localStorage.setItem('token', res.token);
-      })
+    registerUser(values);
+    // window.location.href = '/auth';
   };
 
   const onFinishFailed = () => {
+    // console.log('Failed:', errorInfo);
   };
 
   return (
     <div className="auth">
       <div className="auth__container">
-        <h1>Sign in</h1>
+        <h1>Registration</h1>
         <Form
           {...layout}
           name="basic"
@@ -35,6 +34,10 @@ const AuthForm = () => {
           onFinishFailed={onFinishFailed}
         >
           <Form.Item label="Login" name="login" rules={[{ required: true, message: 'Please input your login!' }]}>
+            <Input />
+          </Form.Item>
+
+          <Form.Item label="Name" name="name" rules={[{ required: true, message: 'Please input your name!' }]}>
             <Input />
           </Form.Item>
 
@@ -57,4 +60,4 @@ const AuthForm = () => {
   );
 };
 
-export default withRouter(AuthForm);
+export default withRouter(RegisterForm);

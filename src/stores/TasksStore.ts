@@ -6,7 +6,6 @@ class TasksStore {
 
   constructor() {
     makeAutoObservable(this);
-    this.getTasks();
   }
 
   getTasks = async () => {

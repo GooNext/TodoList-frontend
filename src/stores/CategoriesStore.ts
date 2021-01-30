@@ -6,7 +6,6 @@ class CategoriesStore {
 
   constructor() {
     makeAutoObservable(this);
-    this.getCategories();
   }
 
   getCategories = async () => {
