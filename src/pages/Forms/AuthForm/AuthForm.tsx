@@ -1,6 +1,7 @@
 import { Button, Input, Form } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import { loginUser } from '../../../api';
+import UserStore from '../../../stores/UserStore';
 
 const layout = {
   labelCol: { span: 8 },
@@ -16,6 +17,7 @@ const AuthForm = () => {
     loginUser(values).then((res: any) => {
       window.location.href = '/';
       localStorage.setItem('token', res.token);
+      UserStore.getUserByLogin(values.login);
     });
   };
 

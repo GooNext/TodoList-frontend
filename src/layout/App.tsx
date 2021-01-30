@@ -23,7 +23,6 @@ type PropsType = {
 
 const App = ({ location: { pathname } }: PropsType) => {
   const { t, i18n } = useTranslation();
-
   const changeLanguage = (language) => {
     i18n.changeLanguage(language);
   };
@@ -32,6 +31,8 @@ const App = ({ location: { pathname } }: PropsType) => {
     CategoriesStore.getCategories();
     TasksStore.getTasks();
   };
+
+  const isToken = localStorage.getItem('token');
 
   return (
     <>
@@ -48,7 +49,7 @@ const App = ({ location: { pathname } }: PropsType) => {
             <MenuItems />
           </Sider>
           <Layout className="site-layout">
-            <MainHeader t={t} changeLanguage={changeLanguage} />
+            <MainHeader isToken={isToken} t={t} changeLanguage={changeLanguage} />
             <Content style={{ margin: '0 16px' }}>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                 <Switch>

@@ -1,5 +1,5 @@
 import { Button, Input, Form } from 'antd';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { registerUser } from '../../../api';
 import '../RegisterForm.scss';
 
@@ -15,24 +15,13 @@ const tailLayout = {
 const RegisterForm = () => {
   const onFinish = (values: any) => {
     registerUser(values);
-    // window.location.href = '/auth';
-  };
-
-  const onFinishFailed = () => {
-    // console.log('Failed:', errorInfo);
   };
 
   return (
     <div className="auth">
       <div className="auth__container">
         <h1>Registration</h1>
-        <Form
-          {...layout}
-          name="basic"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-        >
+        <Form {...layout} name="basic" initialValues={{ remember: true }} onFinish={onFinish}>
           <Form.Item label="Login" name="login" rules={[{ required: true, message: 'Please input your login!' }]}>
             <Input />
           </Form.Item>
@@ -54,6 +43,9 @@ const RegisterForm = () => {
               Submit
             </Button>
           </Form.Item>
+          <p>
+            If you are alredy registered <Link to="/auth">click here</Link>
+          </p>
         </Form>
       </div>
     </div>

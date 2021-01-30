@@ -4,6 +4,7 @@ export const logout = () => {
   localStorage.removeItem('token');
   sessionStorage.removeItem('token');
   // eslint-disable-next-line no-restricted-globals
+  window.location.href = '/auth';
   // location.reload();
 };
 

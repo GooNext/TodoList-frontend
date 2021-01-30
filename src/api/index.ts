@@ -1,3 +1,4 @@
+import { notification } from 'antd';
 import { getAccessToken, logout } from '../utils';
 
 const fetchApi = async ({ path, method, body }: any) => {
@@ -5,8 +6,8 @@ const fetchApi = async ({ path, method, body }: any) => {
   const token = getAccessToken();
   if (token) {
     headers.append('Authorization', `Bearer ${token}`);
-    headers.append('Content-Type', 'application/json;charset=utf-8');
   }
+  headers.append('Content-Type', 'application/json; charset=utf-8');
   const url = `https://dry-cliffs-80424.herokuapp.com/${path}`;
   return fetch(url, {
     headers,
@@ -15,7 +16,6 @@ const fetchApi = async ({ path, method, body }: any) => {
   }).then((res) => {
     if (res.status === 401) {
       logout();
-      window.location.href = '/auth';
     }
     return res.json();
   });
@@ -74,9 +74,26 @@ export const deleteBoard = async (id: string): Promise<unknown | string> => {
 };
 
 export const registerUser = async (sendObj: Record<string, unknown>): Promise<unknown | string> => {
-  return fetchApi({ path: 'user', method: 'POST', body: sendObj });
+  return fetchApi({ path: 'user', method: 'POST', body: sendObj }).then((res: any) => {
+    if (res.code === 11000) {
+      notification.open({
+        message: 'No no no no no',
+        description: `Login ${res.keyValue.login} alredy exists`,
+      });
+    } else {
+      notification.open({
+        message: 'Success',
+        description: 'Your account was been succesfully created please sign in',
+      });
+      window.location.href = '/auth';
+    }
+  });
 };
 
 export const loginUser = async (sendObj: Record<string, unknown>): Promise<unknown | string> => {
   return fetchApi({ path: 'login', method: 'POST', body: sendObj });
+};
+
+export const getUserByLogin = async (login: string): Promise<unknown | string> => {
+  return fetchApi({ path: `user/${login}`, method: 'GET' });
 };

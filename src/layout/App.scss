@@ -32,7 +32,7 @@
 
 .category {
   &__header {
-      padding-left: 0!important;
+    padding-left: 0 !important;
   }
 }
 
@@ -46,6 +46,9 @@
     align-items: center;
     justify-content: space-between;
     padding-right: 20px;
+    &--auth {
+      margin-left: 40px;
+    }
     &--locales {
       display: flex;
       & div {
@@ -61,15 +64,15 @@
   height: 35px;
   width: 35px;
   &__ru {
-    background: url('../img/ruflag.png');
+    background: url("../img/ruflag.png");
     background-size: cover;
   }
   &__zh {
-    background: url('../img/chinaflag.jpg');
+    background: url("../img/chinaflag.jpg");
     background-size: cover;
   }
   &__en {
-    background: url('../img/enflag.jpeg');
+    background: url("../img/enflag.jpeg");
     background-size: cover;
     background-position: center;
   }
