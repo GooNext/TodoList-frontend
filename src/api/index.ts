@@ -29,6 +29,10 @@ export const addCategory = async (sendObj: Record<string, unknown>): Promise<unk
   return fetchApi({ path: 'categories/add', method: 'POST', body: sendObj });
 };
 
+export const updateCategory = async (sendObj, categoryId): Promise<unknown | string> => {
+  return fetchApi({ path: `categories/${categoryId}`, method: 'PUT', body: sendObj });
+};
+
 export const deleteCategory = async (id: string): Promise<unknown | string> => {
   return fetchApi({ path: `categories/${id}`, method: 'DELETE' });
 };
@@ -94,6 +98,6 @@ export const loginUser = async (sendObj: Record<string, unknown>): Promise<unkno
   return fetchApi({ path: 'login', method: 'POST', body: sendObj });
 };
 
-export const getUserByLogin = async (login: string): Promise<unknown | string> => {
+export const getUserByLogin = async (login: string | null): Promise<unknown | string> => {
   return fetchApi({ path: `user/${login}`, method: 'GET' });
 };

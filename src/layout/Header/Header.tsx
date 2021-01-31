@@ -13,9 +13,6 @@ const MainHeader = (props: any) => {
           <Menu.Item key="1">
             <Link to="/">{t('All categories')}</Link>
           </Menu.Item>
-          <Menu.Item key="2">
-            <Link to="/tasks">{t('All tasks')}</Link>
-          </Menu.Item>
         </Menu>
         <div className="df align-items-center header__container--right">
           <div className="header__container--locales">

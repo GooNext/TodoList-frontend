@@ -7,10 +7,12 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import CategoriesStore from '../../stores/CategoriesStore';
 import { AddNewCategory } from '../Modals/Modals';
+import UserStore from '../../stores/UserStore';
 
 interface SubMenuType {
   title: string;
   _id: string;
+  userId: string;
 }
 
 const RenderMenuItems = observer(({ showModal }: any) => {
@@ -28,9 +30,13 @@ const RenderMenuItems = observer(({ showModal }: any) => {
       {CategoriesStore.categories.length ? (
         CategoriesStore.categories.map((item: SubMenuType) => {
           return (
-            <Menu.Item key={item._id}>
-              <Link to={`/categories/${item._id}`}>{item.title}</Link>
-            </Menu.Item>
+            <>
+              {item.userId === UserStore.user[0]?._id ? (
+                <Menu.Item key={item._id}>
+                  <Link to={`/categories/${item._id}`}>{item.title}</Link>
+                </Menu.Item>
+              ) : null}
+            </>
           );
         })
       ) : (

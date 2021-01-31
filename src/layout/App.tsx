@@ -12,6 +12,7 @@ import AuthForm from '../pages/Forms/AuthForm/AuthForm';
 // import { getAccessToken } from '../utils';
 import CategoriesStore from '../stores/CategoriesStore';
 import TasksStore from '../stores/TasksStore';
+import UserStore from '../stores/UserStore';
 
 type LocationType = {
   pathname: string;
@@ -30,6 +31,7 @@ const App = ({ location: { pathname } }: PropsType) => {
   const fetchingData = () => {
     CategoriesStore.getCategories();
     TasksStore.getTasks();
+    UserStore.getUserByLogin();
   };
 
   const isToken = localStorage.getItem('token');

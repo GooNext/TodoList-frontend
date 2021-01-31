@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 /* eslint-disable no-restricted-syntax */
 export const logout = () => {
   localStorage.removeItem('token');
+  localStorage.removeItem('login');
   sessionStorage.removeItem('token');
   // eslint-disable-next-line no-restricted-globals
   window.location.href = '/auth';

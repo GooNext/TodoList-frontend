@@ -2,12 +2,13 @@ import { Input, message, Select } from 'antd';
 import { Option } from 'antd/lib/mentions';
 import TextArea from 'antd/lib/input/TextArea';
 import Modal from 'antd/lib/modal/Modal';
+import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 import { useCallback, useState } from 'react';
-import ModalWindow from '../ModalWindow/ModalWindow';
 import BoardsStore from '../../stores/BoardsStore';
 import CategoriesStore from '../../stores/CategoriesStore';
 import TasksStore from '../../stores/TasksStore';
+import UserStore from '../../stores/UserStore';
 
 export const AddNewBoard = ({ setIsModalVisible, isModalVisible, categoryId }: any) => {
   const { t } = useTranslation();
@@ -91,12 +92,14 @@ export const AddNewTask = ({ setIsModalVisible, isModalVisible, categoryId }: an
   );
 };
 
-export const AddNewCategory = ({ setIsModalVisible, isModalVisible }: any) => {
+export const AddNewCategory = observer(({ setIsModalVisible, isModalVisible }: any) => {
   const { t } = useTranslation();
   const [sendObj, setSendObj] = useState({
     title: '',
     time: new Date(),
     icon: '1242154',
+    description: '',
+    userId: UserStore.user[0]?._id,
   });
 
   const handleOk = useCallback(() => {
@@ -113,19 +116,21 @@ export const AddNewCategory = ({ setIsModalVisible, isModalVisible }: any) => {
 
   const handle = {
     inputChange: (e) => setSendObj({ ...sendObj, title: e.target.value }),
+    textArea: (e) => setSendObj({ ...sendObj, description: e.target.value }),
   };
 
   return (
-    <ModalWindow
-      title={t('Add new category')}
-      onChange={handle}
-      visible={isModalVisible}
-      onOk={handleOk}
-      onCancel={handleCancel}
-      options={[]}
-    />
+    <Modal title={t('Add new category')} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <Input onChange={handle.inputChange} placeholder={t('Enter title')} />
+      <TextArea
+        style={{ margin: '15px 0' }}
+        placeholder={t('Enter a description')}
+        rows={4}
+        onChange={handle.textArea}
+      />
+    </Modal>
   );
-};
+});
 
 export const OnTaskEdit = ({ taskInfo, setIsModalVisible, isModalVisible }: any) => {
   const { t } = useTranslation();
@@ -152,6 +157,38 @@ export const OnTaskEdit = ({ taskInfo, setIsModalVisible, isModalVisible }: any)
   return (
     <div>
       <Modal title="Update task info" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        <Input style={{ marginBottom: '15px' }} onChange={(e) => handle.inputTitleChange(e)} placeholder="Edit title" />
+        <TextArea placeholder={t('Edit description')} rows={4} onChange={(e) => handle.inputDescriptionChange(e)} />
+      </Modal>
+    </div>
+  );
+};
+
+export const OnCategoryEdit = ({ categoryInfo, setIsModalVisible, isModalVisible }: any) => {
+  const { t } = useTranslation();
+  const [sendObj, setSendObj] = useState({
+    title: categoryInfo.title,
+    description: categoryInfo.description,
+  });
+
+  const handleOk = useCallback(() => {
+    CategoriesStore.updateCategory(sendObj, categoryInfo.id);
+    message.info(t('Category has been successfully updated'));
+    setIsModalVisible(false);
+  }, [sendObj, setIsModalVisible, categoryInfo.id, t]);
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const handle = {
+    inputTitleChange: (e) => setSendObj({ ...sendObj, title: e.target.value }),
+    inputDescriptionChange: (e) => setSendObj({ ...sendObj, description: e.target.value }),
+  };
+
+  return (
+    <div>
+      <Modal title="Update category info" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <Input style={{ marginBottom: '15px' }} onChange={(e) => handle.inputTitleChange(e)} placeholder="Edit title" />
         <TextArea placeholder={t('Edit description')} rows={4} onChange={(e) => handle.inputDescriptionChange(e)} />
       </Modal>

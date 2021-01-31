@@ -6,10 +6,11 @@ class UserStore {
 
   constructor() {
     makeAutoObservable(this);
+    this.getUserByLogin();
   }
 
-  getUserByLogin = async (login: string) => {
-    this.user = await getUserByLogin(login);
+  getUserByLogin = async () => {
+    this.user = await getUserByLogin(localStorage.getItem('userLogin'));
   };
 }
 

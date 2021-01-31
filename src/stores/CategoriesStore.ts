@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import { getCategories, addCategory, deleteCategory } from '../api/index';
+import { getCategories, addCategory, deleteCategory, updateCategory } from '../api/index';
 
 class CategoriesStore {
   categories: any = [];
@@ -17,6 +17,12 @@ class CategoriesStore {
       .then(() => {
         this.getCategories();
       })
+      .catch((err: string) => new Error(err));
+  };
+
+  updateCategory = async (sendObj, id) => {
+    await updateCategory(sendObj, id)
+      .then(() => this.getCategories())
       .catch((err: string) => new Error(err));
   };
 
