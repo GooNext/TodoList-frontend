@@ -17,7 +17,6 @@ const Category = ({ match }: any) => {
   const { t } = useTranslation();
   const [newBoard, setNewBoard] = useState(false);
   const [newTask, setNewTask] = useState(false);
-  const [updateTask, setUpdateTask] = useState(false);
   const filteredCategory = CategoriesStore.categories.filter((e: any) => e._id === match.params.id)[0];
   const categoryInfo = {
     id: match.params.id,
@@ -31,7 +30,6 @@ const Category = ({ match }: any) => {
   const handle = {
     addNewBoard: (e: boolean) => setNewBoard(e),
     addNewTask: (e: boolean) => setNewTask(e),
-    updateTask: (e: boolean) => setUpdateTask(e),
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -87,15 +85,27 @@ const Category = ({ match }: any) => {
 
   const CustomTask = (e) => {
     const { title, description, id, isCompleted } = e;
+    const [updateTask, setUpdateTask] = useState(false);
+
+    const update = {
+      updateTask: (elem: boolean) => setUpdateTask(elem),
+    };
+
     const taskInfo = {
       title,
       description,
-      id,
     };
 
     return (
       <div className="task">
-        <OnTaskEdit taskInfo={taskInfo} setIsModalVisible={handle.updateTask} isModalVisible={updateTask} />
+        {updateTask ? (
+          <OnTaskEdit
+            taskInfo={taskInfo}
+            taskId={id}
+            setIsModalVisible={update.updateTask}
+            isModalVisible={updateTask}
+          />
+        ) : null}
         <div className="task__title df justify-between align-items-center">
           <h3 className="task__title">{title}</h3>
           <Popover

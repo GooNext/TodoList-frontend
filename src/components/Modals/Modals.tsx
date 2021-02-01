@@ -139,7 +139,7 @@ export const AddNewCategory = observer(({ setIsModalVisible, isModalVisible }: a
   );
 });
 
-export const OnTaskEdit = ({ taskInfo, setIsModalVisible, isModalVisible }: any) => {
+export const OnTaskEdit = ({ taskId, taskInfo, setIsModalVisible, isModalVisible }: any) => {
   const { t } = useTranslation();
   const [sendObj, setSendObj] = useState({
     title: taskInfo.title,
@@ -147,10 +147,10 @@ export const OnTaskEdit = ({ taskInfo, setIsModalVisible, isModalVisible }: any)
   });
 
   const handleOk = useCallback(() => {
-    TasksStore.updateTask(sendObj, taskInfo.id);
+    TasksStore.updateTask(sendObj, taskId);
     message.info(t('Task has been successfully updated'));
     setIsModalVisible(false);
-  }, [sendObj, setIsModalVisible, taskInfo.id, t]);
+  }, [sendObj, setIsModalVisible, taskId, t]);
 
   const handleCancel = () => {
     setIsModalVisible(false);
