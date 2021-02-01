@@ -51,7 +51,7 @@ const App = ({ location: { pathname } }: PropsType) => {
         <Layout style={{ minHeight: '100vh' }}>
           {fetchingData()}
           <Sider collapsible>
-            <div className="logo" />
+            <div className="logo">!ℵT✺Nḙ✘т</div>
             <MenuItems />
           </Sider>
           <Layout className="site-layout">
