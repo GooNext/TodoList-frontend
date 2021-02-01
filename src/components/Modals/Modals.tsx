@@ -6,10 +6,10 @@ import Modal from 'antd/lib/modal/Modal';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
 import { useCallback, useEffect, useState } from 'react';
+import { getUserByLogin } from '../../api';
 import BoardsStore from '../../stores/BoardsStore';
 import CategoriesStore from '../../stores/CategoriesStore';
 import TasksStore from '../../stores/TasksStore';
-import UserStore from '../../stores/UserStore';
 
 export const AddNewBoard = ({ setIsModalVisible, isModalVisible, categoryId }: any) => {
   const { t } = useTranslation();
@@ -104,7 +104,9 @@ export const AddNewCategory = observer(({ setIsModalVisible, isModalVisible }: a
   });
 
   useEffect(() => {
-    setSendObj({ ...sendObj, userId: UserStore.user[0]?._id });
+    getUserByLogin(localStorage.getItem('userLogin')).then((res: any) =>
+      setSendObj({ ...sendObj, userId: res[0]?._id })
+    );
   }, []);
 
   const handleOk = useCallback(() => {

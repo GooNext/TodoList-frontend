@@ -3,7 +3,7 @@
 import { Skeleton, Card, Avatar, Popover, Space, message, PageHeader } from 'antd';
 import { EditOutlined, EllipsisOutlined, DeleteOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Meta from 'antd/lib/card/Meta';
@@ -97,11 +97,11 @@ const AllCategories = () => {
       <div className="allCategories">
         <Space className="allCategories" wrap size={20}>
           {categories.map((item: ItemType) => (
-            <>
+            <React.Fragment key={item._id}>
               {item.userId === UserStore.user[0]?._id ? (
                 <CategoryItem description={item.description} t={t} _id={item._id} title={item.title} />
               ) : null}
-            </>
+            </React.Fragment>
           ))}
         </Space>
       </div>
