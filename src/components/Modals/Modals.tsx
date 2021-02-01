@@ -104,7 +104,7 @@ export const AddNewCategory = observer(({ setIsModalVisible, isModalVisible }: a
   });
 
   useEffect(() => {
-    setSendObj({ ...sendObj, userId: UserStore.user[0]._id });
+    setSendObj({ ...sendObj, userId: UserStore.user[0]?._id });
   }, []);
 
   const handleOk = useCallback(() => {
