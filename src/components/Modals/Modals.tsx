@@ -99,7 +99,7 @@ export const AddNewCategory = observer(({ setIsModalVisible, isModalVisible }: a
     time: new Date(),
     icon: '1242154',
     description: '',
-    userId: UserStore.user[0]?._id,
+    userId: UserStore.user[0]._id,
   });
 
   const handleOk = useCallback(() => {
