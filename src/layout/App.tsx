@@ -2,6 +2,7 @@ import './App.scss';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch, withRouter } from 'react-router-dom';
 // import { useEffect } from 'react';
+import { useEffect } from 'react';
 import Layout, { Content, Footer } from 'antd/lib/layout/layout';
 import Sider from 'antd/lib/layout/Sider';
 import routes from '../routes/routes';
@@ -31,8 +32,11 @@ const App = ({ location: { pathname } }: PropsType) => {
   const fetchingData = () => {
     CategoriesStore.getCategories();
     TasksStore.getTasks();
-    UserStore.getUserByLogin();
   };
+
+  useEffect(() => {
+    UserStore.getUserByLogin();
+  }, []);
 
   const isToken = localStorage.getItem('token');
 

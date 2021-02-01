@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Input, message, Select } from 'antd';
 import { Option } from 'antd/lib/mentions';
 import TextArea from 'antd/lib/input/TextArea';
 import Modal from 'antd/lib/modal/Modal';
 import { observer } from 'mobx-react-lite';
 import { useTranslation } from 'react-i18next';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import BoardsStore from '../../stores/BoardsStore';
 import CategoriesStore from '../../stores/CategoriesStore';
 import TasksStore from '../../stores/TasksStore';
@@ -99,8 +100,12 @@ export const AddNewCategory = observer(({ setIsModalVisible, isModalVisible }: a
     time: new Date(),
     icon: '1242154',
     description: '',
-    userId: UserStore.user[0]._id,
+    userId: '',
   });
+
+  useEffect(() => {
+    setSendObj({ ...sendObj, userId: UserStore.user[0]._id });
+  }, []);
 
   const handleOk = useCallback(() => {
     if (sendObj.title) {
